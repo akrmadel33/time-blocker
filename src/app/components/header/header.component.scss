@@ -1,0 +1,21 @@
+@import '~scss/globals';
+
+.header {
+  font-family: $logo-font;
+  font-size: 60px;
+  background-color: $header-bgcolor;
+  padding: 20px;
+  color: $header-logo-color;
+  display: flex;
+  align-items: baseline;
+  border-bottom: 1px solid $header-border-color;
+  box-shadow: $box-shadow;
+
+  .logo { padding-right: 30px; }
+
+  .time-now {
+    font-family: $text-font;
+    font-size: 20px;
+    color: $header-timer-color;
+  }
+}

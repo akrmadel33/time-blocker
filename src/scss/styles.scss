@@ -1,0 +1,36 @@
+@import './globals';
+
+/* ---------------------------------- */
+/* Fonts
+------------------------------------- */
+@import url('https://fonts.googleapis.com/css?family=Audiowide|Monoton');
+@import url('~assets/icomoon/style.css');
+
+/* ---------------------------------- */
+/* Globals settings
+------------------------------------- */
+body {
+  margin: 0; padding: 0;
+  min-height: 100%;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  & > * { flex-shrink: 0; }
+
+  & > *:first-child { z-index: 99 }
+}
+
+.content {
+  flex-grow: 1;
+  display: flex;
+
+  & > *:last-child {
+    width: 100%;
+    padding: 10px;
+    background-color: #dfe6e9;
+  }
+}

@@ -1,0 +1,36 @@
+@import '~scss/globals';
+
+.side-menu {
+  width: 250px; height: 100%;
+  background-color: $side-menu-bgcolor;
+
+  .menu-item {
+    font-family: $text-font;
+    font-size: 20px;
+    color: $side-menu-color;
+    padding: 15px 10px;
+    margin: 0 10px;
+    border-bottom: 2px solid $side-menu-color;
+    cursor: pointer;
+    position: relative;
+
+    &:hover {
+      color: #fff;
+    }
+
+    .border-bottom {
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translate(-50%, 50%);
+      height: 2px;
+      width: 0%;
+      background-color: #fff;
+      transition: 0.5s width;
+    }
+
+    &:hover .border-bottom { width: 100%; }
+
+    &.active { color: #fff; }
+    &.active .border-bottom { width: 100%; }
+  }
+}

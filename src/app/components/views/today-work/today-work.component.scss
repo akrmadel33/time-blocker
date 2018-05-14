@@ -1,0 +1,157 @@
+@import '~scss/globals';
+
+app-today-work {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px 15px;
+    box-shadow: $box-shadow;
+
+    .title { font-family: $text-font; }
+
+    .actions {
+      font-size: 15px;
+
+      span {
+        padding: 10px;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      .icon-plus { background-color: #4cd137; color: $header-bgcolor; }
+    }
+  }
+
+  .work-container {
+    margin-top: 20px;
+    margin-left: 50px;
+
+    .task {
+      display: flex;
+      align-items: baseline;
+      box-shadow: $box-shadow;
+      margin: 10px 0;
+
+      .task-action {
+        font-size: 15px;
+        padding: 15px;
+        border-radius: 50%;
+        color: $header-bgcolor;
+        margin: 0 10px 10px 0;
+        cursor: pointer;
+
+        &.icon-checkmark { background-color: #4cd137 }
+        &.icon-cross { background-color: #e84118 }
+        &.icon-cog { background-color: #273c75 }
+      }
+
+      .task-name {
+        margin: 0 15px;
+        padding: 8px 0 8px 15px;
+        border-left: 1px solid $side-menu-color;
+        position: relative;
+        z-index: 1;
+
+        input,
+        .input {
+          font-size: 20px;
+          font-family: $text-font;
+          display: inline-block;
+        }
+        input { padding-left: 10px }
+
+        .icon-plus {
+          font-size: 10px;
+          padding: 5px;
+          border-radius: 3px;
+          background-color: #4cd137;
+          cursor: pointer;
+          color: $header-bgcolor;
+          margin-right: 10px;
+        }
+
+        .task-loader {
+          position: absolute;
+          top: 0; left: 5px;
+          height: 100%;
+          background-color: #c23616;
+          transition: all 0.5s;
+          z-index: -1;
+        }
+      }
+
+      .task-hours,
+      .task-minutes,
+      .task-seconds {
+        font-size: 15px;
+        font-family: $text-font;
+        width: 30px;
+        text-align: center;
+        z-index: 1;
+      }
+
+      .time-spacer { padding: 0 5px; @extend .task-hours; width: auto; }
+    }
+
+    .sub-task {
+      @extend .task;
+      position: relative;
+
+      .sub-task-action {
+        @extend .task-action;
+        margin-left: 25px;
+        z-index: 10;
+      }
+
+      .sub-task-mini-action {
+        position: absolute;
+        top: calc(50% - 5px);
+        left: 33px;
+        transform: translate(0%, -50%);
+        transition: all 0.5s;
+        font-size: 15px;
+        padding: 8px;
+        border-radius: 50%;
+        cursor: pointer;
+        color: $header-bgcolor;
+
+        &.icon-cross     { background-color: #e84118 }
+        &.icon-play3,
+        &.icon-checkmark { background-color: #4cd137 }
+        &.icon-pause2    { background-color: #fbc531 }
+        &.icon-pencil    { background-color: #0097e6 }
+
+        &.icon-cross.open   { top: -10px; left:   0px }
+        &.icon-play3.open,
+        &.icon-pause2.open  {             left: -20px }
+        &.icon-pencil.open,
+        &.icon-checkmark    { top:  55px; left:   0px }
+      }
+
+      .sub-task-name {
+        @extend .task-name;
+
+        .sub-task-loader {
+          @extend .task-loader;
+          background-color: #e1b12c;
+        }
+      }
+
+      .sub-task-hours,
+      .sub-task-minutes,
+      .sub-task-seconds { @extend .task-hours; }
+
+      .hours-controller,
+      .minutes-controller {
+        padding-left: 5px;
+        z-index: 1;
+
+        span { cursor: pointer; }
+        .icon-chevron-up   { color: #4cd137 }
+        .icon-chevron-down { color: #e84118 }
+      }
+
+      .sub-time-spacer { @extend .time-spacer; }
+    }
+  }
+}
