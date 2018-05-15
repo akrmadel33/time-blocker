@@ -11,7 +11,7 @@ export class ElementsService {
             <div class="task-name">
               <input type="text" placeholder="Task Name">
             </div>
-          </div> `;
+          </div>`;
 
 
   divInput = `<span class="icon-plus"></span>
@@ -28,6 +28,10 @@ export class ElementsService {
   taskLoader = `<div class="task-loader" style="width:0px"></div>`;
 
 
+  taskMiniActions = ` <span class="task-mini-action icon-cross"></span>
+                      <span class="task-mini-action icon-eye-slash"></span>`;
+
+
   subTask = ` <div class="sub-task">
                 <span class="sub-task-action icon-checkmark"></span>
 
@@ -37,16 +41,16 @@ export class ElementsService {
 
                 <div class="sub-task-hours">00</div>
                 <div class="hours-controller">
-                  <span class="icon-chevron-up"></span>
-                  <span class="icon-chevron-down"></span>
+                  <button class="icon-chevron-up"></button>
+                  <button class="icon-chevron-down"></button>
                 </div>
 
                 <div class="sub-time-spacer">:</div>
 
                 <div class="sub-task-minutes">00</div>
                 <div class="minutes-controller">
-                  <span class="icon-chevron-up"></span>
-                  <span class="icon-chevron-down"></span>
+                  <button class="icon-chevron-up"></button>
+                  <button class="icon-chevron-down"></button>
                 </div>
 
                 <div class="sub-time-spacer">:</div>
@@ -61,19 +65,21 @@ export class ElementsService {
 
 
   miniActions = ` <span class="sub-task-mini-action icon-cross"></span>
-                  <span class="sub-task-mini-action icon-play3"></span>
+                  <span class="sub-task-mini-action icon-play3">
+                    <span class="sub-task-mini-action icon-meter2"></span>
+                  </span>
                   <span class="sub-task-mini-action icon-pencil"></span>`;
 
 
   subHourController = ` <div class="hours-controller">
-                          <span class="icon-chevron-up"></span>
-                          <span class="icon-chevron-down"></span>
+                          <button class="icon-chevron-up"></button>
+                          <button class="icon-chevron-down"></button>
                         </div>`;
 
 
   subMinuteController = ` <div class="minutes-controller">
-                            <span class="icon-chevron-up"></span>
-                            <span class="icon-chevron-down"></span>
+                            <button class="icon-chevron-up"></button>
+                            <button class="icon-chevron-down"></button>
                           </div>`;
 
 }
