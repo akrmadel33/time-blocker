@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
-import * as $ from 'jquery';
-import * as _ from 'lodash';
+import * as $   from 'jquery';
+import * as _   from 'lodash';
+import { Howl } from 'howler';
 
 import { ElementsService } from '../../../services/elements.service';
 
@@ -17,14 +18,19 @@ export class TodayWorkComponent implements OnInit {
   countDown = setInterval(function(){}, 1000);
   subTaskTime:number = 0;
 
+  sound = new Howl({
+    src: ['../../../../assets/sounds/open-ended.mp3']
+  });
+  soundTimeInterval: Array<number>; // <-- holds the time intervals that triggers the sound
+
   constructor(public elements:ElementsService) { }
 
   ngOnInit() {
-    $(document).ready( () => this.addTask() );
+    $(document).ready( () => this.headerActions() );
 
-    let checkSubTask = setInterval(() => {
+    let checkSubTaskZero = setInterval(() => {
       if(this.subTaskTime <= 0) { clearInterval(this.countDown); this.pauseWhenZero(); }
-    }, 500)
+    }, 500);
 
     // listen to when window resize or when scroll bar appear
     $(document).ready(() => {
@@ -53,12 +59,18 @@ export class TodayWorkComponent implements OnInit {
 
       // Stick the iframe somewhere out of the way
       document.body.appendChild(iframe);
-    })
+    });
   }
 
-  addTask() {
+  headerActions() {
     let _this = this;
 
+    // notifications action
+    $('.actions .notification').on('click', function() {
+      $(this).hasClass('icon-bell') ? $(this).removeClass('icon-bell').addClass('icon-bell-slash') : $(this).removeClass('icon-bell-slash').addClass('icon-bell');
+    });
+
+    // add task action
     $('.actions .icon-plus').on('click', function() {
       $('.work-container').append(_this.elements.task);
       _this.taskAction();
@@ -210,7 +222,7 @@ export class TodayWorkComponent implements OnInit {
 
     let el;
     if(newEl) {
-      el = $el.nextAll('.sub-task')[$el.nextAll('.sub-task').length-1];
+      el = $el.nextUntil('.task')[$el.nextUntil('.task').length-1];
     } else {
       el = $el
     }
@@ -276,7 +288,7 @@ export class TodayWorkComponent implements OnInit {
         $(this).next().children('.sub-task-loader').width(width);
         // set data-sub-task-time
         let time = +$(this).nextAll('.sub-task-hours').text() * 3600 + +$(this).nextAll('.sub-task-minutes').text() * 60 + +$(this).nextAll('.sub-task-seconds').text();
-        (time == 0) ? $(this).next().children('.sub-task-loader').width(0) : false;
+        // (time == 0) ? $(this).next().children('.sub-task-loader').width(0) : false;
         $(this).next().children('.sub-task-loader').data('sub-task-time', time);
 
         // add subtask miniactions and its handler
@@ -396,6 +408,9 @@ export class TodayWorkComponent implements OnInit {
     clearInterval(this.countDown);
     let _this = this;
 
+    // prepare time intervals even when no notification is wanted
+    this.createSoundIntervals($el);
+
     // add total subtask time to the global class variable
     this.subTaskTime = 0;
     this.subTaskTime += +$el.children('.sub-task-hours').text() * 60 * 60;
@@ -425,6 +440,9 @@ export class TodayWorkComponent implements OnInit {
       ( time < 10 ) ? time = '0' + time : time;
       $el.children('.sub-task-seconds').text(time);
       _this.taskTime( $($el.prevAll('.task')[0]), false );
+
+      // play notification sound and its functions when notifications are wanted
+      if($('.actions .notification').hasClass('icon-bell')) _this.playNotification($el);
     }, 1000);
   }
 
@@ -467,6 +485,32 @@ export class TodayWorkComponent implements OnInit {
     ( time < 10 ) ? time = '0' + time : time;
     $('.header .title').children('.today-minute').text(time);
 
+  }
+
+  // (reference to subtask that is counting down)
+  createSoundIntervals($el) {
+    // subtask data time in seconds
+    let fullTime = $el.children('.sub-task-name').children('.sub-task-loader').data('sub-task-time');
+
+    this.soundTimeInterval = [0];
+    while (fullTime >= 2400) {
+      fullTime = fullTime - 1500;
+      this.soundTimeInterval.push(fullTime);
+    }
+  }
+
+  // (reference to subtask that is counting down)
+  playNotification($el) {
+    _.forEach(this.soundTimeInterval, (time) => {
+      if(time == this.subTaskTime) {
+
+        this.sound.play();
+
+        clearInterval(this.countDown);
+        this.pauseWhenZero();
+
+      }
+    })
   }
 
 }

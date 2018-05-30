@@ -26,12 +26,19 @@ app-today-work {
       font-size: 15px;
 
       span {
-        padding: 10px;
+        display: inline-block;
+        width: 35px;
+        text-align: center;
+        padding: 10px 0;
         border-radius: 3px;
         cursor: pointer;
+        color: $header-bgcolor;
+        margin-right: 10px;
       }
 
-      .icon-plus { background-color: #4cd137; color: $header-bgcolor; }
+      .icon-plus,
+      .icon-bell  { background-color: #4cd137 }
+      .icon-bell-slash { background-color: #7f8fa6;}
     }
   }
 
